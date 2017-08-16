@@ -42,11 +42,14 @@ function fixPort()
 {
 	ifTableExists("data", function() {
 		var port;
-		while (isNaN(port) || port < 0 || port > 65535)
-			port = readlineSync.question("Enter the port on which you want the server to listen: ");
+		while (isNaN(port) || port < 0 || port > 65535) {
+			port = readlineSync.question("Enter the port on which you want the server to listen (leave blank for the default HTTP port 80): ");
+			if (port === "")
+				port = 80;
+		}
 
 		glob.db.serialize(function() {
-			glob.db.run("DELETE FROM data WHERE key = 'port'"); // TEMP: Jag provade med REPLACE nedan:
+			glob.db.run("DELETE FROM data WHERE key = 'port'");
 			glob.db.run("INSERT INTO data VALUES ('port', ?)", port);
 		});
 

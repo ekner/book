@@ -4,10 +4,13 @@ Booking system for various events, like LAN parties.
 ## Features:
 
 * Multi-language, right now there are translations for Swedish and English.
+* Modifiable layout on the go
+* Manage all the seats in an admin interface
+* Supports reserving seats with passwords 
 
 ## Technologies:
 
-* Cross platform (tested on Ubuntu 16.04)
+* Cross platform (tested on Ubuntu 16.04 and Windows 10)
 * Languages: JavaScript, HTML, CSS
 * Node.js with Express
 * sqlite as database
