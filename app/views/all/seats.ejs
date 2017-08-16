@@ -1,0 +1,13 @@
+<table id="seats">
+	<% for (var i = 0; i < layout.length; ++i) { %>
+		<tr>
+			<% for (var j = 0; j < layout[i].length; ++j) { %>
+				<% if (layout[i][j].id === 0) { %>
+					<td data-status="spacer"><div></div></td>
+				<% } else { %>
+					<td id="id-<%= layout[i][j].id %>" data-status="empty"><div><p><%= layout[i][j].id %></p></div></td>
+				<% } %>
+			<% } %>
+		</tr>
+	<% } %>
+</table>

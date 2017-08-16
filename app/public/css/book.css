@@ -1,0 +1,101 @@
+html, body {
+	margin: none;
+	padding: none;
+	height: 100%;
+	background: rgb(20, 20, 20);
+	overflow: hidden;
+}
+
+#back {
+	position: absolute;
+	width: 90px;
+	height: 40px;
+	margin-top: 20px;
+	background: black;
+	color: white;
+	font-size: 40px;
+	cursor: pointer;
+}
+
+#back p {
+	position: relative;
+	top: -5px;
+	margin: 0;
+	margin-left: 33px;
+}
+
+#msg-box {
+	position: absolute;
+	top: 15px;
+	left: 50%;
+	transform: translateX(-50%);
+	padding: 10px;
+	padding-left: 15px;
+	padding-right: 15px;
+	border: 3px dashed orange;
+	color: white;
+	display: none;
+	z-index: 100;
+}
+
+#msg-box p {
+	margin: 0;
+}
+
+#seats-container {
+	box-sizing: border-box;
+	height: 100%;
+	padding: 7vh;
+}
+
+#book {
+	display: none;
+	position: absolute;
+	width: 380px;
+	padding: 20px;
+	box-shadow: 0 0 40px 12px rgba(50, 50, 50, 1);
+	background: #101519;
+	border: 3px solid black;
+	border-radius: 3px;
+	color: rgb(210, 210, 210);
+}
+
+#book h2 {
+	margin-top: 0;
+}
+
+#book input[type="text"], #book input[type="password"] {
+	width: 240px;
+	height: 30px;
+	float: right;
+	margin-bottom: 10px;
+	padding-left: 7px;
+	background-color: rgba(0, 0, 0, 0) !important;
+	border: none;
+	box-shadow: 0 0 2px 1px gray;
+	color: white;
+}
+
+#book button {
+	display: block;
+	margin: 0 auto;
+	margin-top: 10px;
+	height: 26px;
+	width: 95%;
+	background: #007a80;
+	border: none;
+	cursor: pointer;
+}
+
+#book label {
+	position: relative;
+	top: 3px;
+}
+
+#book #close {
+	position: absolute;
+	font-size: 30px;
+	top: 5px;
+	right: 11px;
+	cursor: pointer;
+}

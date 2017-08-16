@@ -1,0 +1,64 @@
+html, body {
+	overflow: hidden;
+}
+
+#top-bar .edit-seats {
+	text-decoration: underline;
+	text-decoration-color: lightgray;
+}
+
+#seat-details-container {
+        position: absolute;
+        width: 250px;
+        top: 80px;
+        bottom: 30px;
+        right: 30px;
+}
+
+#seats-container {
+        position: absolute;
+        width: calc(100% - 340px);
+        left: 30px;
+        top: 80px;
+        bottom: 30px;
+}
+
+#seats td:not([data-status="spacer"]) div {
+        cursor: pointer !important;
+}
+
+#msg-box {
+	margin-top: 5px;
+	text-align: center;
+	display: none;
+	background: red;
+}
+
+#msg-box p {
+	margin-top: 0;
+	border-top: 2px dashed orange;
+	border-bottom: 2px dashed orange;
+	padding: 5px;
+}
+
+/* ---------- seat-details ---------- */
+
+.seat-details-box h1 {
+	text-align: center;
+}
+
+.seat-details-box input {
+	font-size: 17px;
+	display: block;
+	width: 75%;
+	height: 46px;
+	margin: 0 auto;
+	margin-top: 10px;
+}
+
+.seat-details-box p {
+	margin: 15%;
+	margin-bottom: 22px;
+	margin-top: 0;
+	text-align: center;
+}

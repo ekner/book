@@ -1,0 +1,18 @@
+<div class="seat-details-box">
+        <h1><%= seatData.id %></h1>
+
+        <% if (seatData.status === "empty" || seatData.status === "onHold") { %>
+                <input type="button" value="<%= trans('unhold') %>" onclick="unholdCurrentDetailsSeat()">
+                <input type="button" value="<%= trans('book') %>" onclick="book(<%= seatData.id %>)">
+                <input type="button" value="<%= trans('reserve') %>" onclick="reserve(<%= seatData.id %>)">
+        <% } else if (seatData.status === "booked") { %>
+                <p><%= seatData.name %></p>
+                <input type="button" value="<%= trans('changeName') %>" onclick="book(<%= seatData.id %>)">
+                <input type="button" value="<%= trans('unbookAndReserve') %>" onclick="reserve(<%= seatData.id %>)">
+                <input type="button" value="<%= trans('unbook') %>" onclick="clearSeat(<%= seatData.id %>)">
+        <% } else if (seatData.status === "reserved") { %>
+                <input type="button" value="<%= trans('changePassword') %>" onclick="reserve(<%= seatData.id %>)">
+                <input type="button" value="<%= trans('unreserveAndBook') %>" onclick="book(<%= seatData.id %>)">
+                <input type="button" value="<%= trans('unreserve') %>" onclick="clearSeat(<%= seatData.id %>)">
+        <% } %>
+</div>

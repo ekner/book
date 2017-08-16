@@ -1,0 +1,64 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	overflow: hidden;
+}
+
+#top-bar .edit-info-text {
+	text-decoration: underline;
+	text-decoration-color: lightgray;
+}
+
+.container {
+	position: absolute;
+	height: calc(100% - 90px);
+	top: 70px;
+	padding: 20px;
+}
+
+#main {
+	display: flex;
+	flex-direction: column;
+	width: calc(100% - 310px);
+	left: 20px;
+}
+
+#main input {
+	width: calc(100%);
+}
+
+#main textarea {
+	width: calc(100%);
+	margin-top: 20px;
+	flex: 1;
+}
+
+#toolbar {
+	width: calc(250px);
+	right: 20px;
+	text-align: center;
+}
+
+#toolbar input {
+	width: 100%;
+}
+
+#add-lang {
+	border: 2px dotted gray;
+	padding: 20px;
+}
+
+#add-lang input {
+	width: 40%;
+}
+
+#add-lang h3 {
+	margin-top: 0;
+}
+
+#toolbar .btn, #toolbar select {
+	width: 100%;
+	margin-bottom: 6px;
+}

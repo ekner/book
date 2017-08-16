@@ -1,0 +1,20 @@
+<div id="top-bar">
+	<h2 id="header">Admin</h2>
+	<div>
+		<h4 class="start"><a href="/admin">Start</a></h4>
+		<h4 class="edit-layout"><a href="/admin/edit-layout">Layout</a></h4>
+		<h4 class="edit-seats"><a href="/admin/edit-seats"><%= trans('seats') %></a></h4>
+		<h4 class="edit-info-text"><a href="/admin/edit-info-text"><%= trans('editText') %></a></h4>
+		<h4 class="logout"><a href="/api/admin-logout"><%= trans('logOut') %></a></h4>
+	</div>
+</div>
+
+<div id="prompt-password">
+	<p id="prompt-password-header"></p>
+	<input type="password" id="prompt-password-text"><br>
+	<input type="button" id="prompt-password-ok" value="OK">
+	<input type="button" id="prompt-password-cancel" value="<%= trans('cancel') %>">
+</div>
+<div id="overlay"></div>
+
+<div id="msg-box"><p></p></div>

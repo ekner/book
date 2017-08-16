@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="<%= trans('langCode') %>">
+	<head>
+		<meta charset="utf-8">
+		<title><%= trans('editText') %> - Admin</title>
+		<link rel="stylesheet" type="text/css" href="/css/global.css">
+		<link rel="stylesheet" type="text/css" href="/css/admin.css">
+		<link rel="stylesheet" type="text/css" href="/css/admin-edit-info-text.css">
+	</head>
+	<body>
+		<%- include("top-bar") %>
+
+		<input type="hidden" id="currentLang" value="<%= currentLang %>">
+
+		<div id="main" class="container">
+			<input type="text" value="<%= info.header %>" id="info-header">
+			<textarea id="info-text"><%= info.text %></textarea>
+		</div>
+
+		<div id="toolbar" class="container">
+			<div id="add-lang">
+				<form>
+					<h3><%= trans("addTrans") %></h3>
+					<input type="text" name="langCode">
+					<input type="submit">
+				</form>
+			</div>
+
+			<h3><%= trans("editTrans") %></h3>
+			<form method="GET" action="/admin/edit-info-text">
+				<select name="langCode" onchange="this.form.submit()">
+					<% for (var i = 0; i < lang.length; ++i) { %>
+						<% if (lang[i].langCode === currentLang) { %>
+							<option selected value="<%= lang[i].langCode %>"><%= lang[i].langCode %></option>
+						<% } else { %>
+							<option value="<%= lang[i].langCode %>"><%= lang[i].langCode %></option>
+						<% } %>
+					<% } %>
+				</select>
+			</form>
+			<input class="btn" type="button" onclick="updateInfo()" value="<%= trans('saveChanges') %>">
+			<input class="btn" type="button" onclick="cancel()" value="<%= trans('cancel') %>">
+			<input class="btn" type="button" onclick="removeLang()" value="<%= trans('removeLang') %>">
+		</div>
+
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f" crossorigin="anonymous"></script>
+        <script src="/js/global.js"></script>
+		<script src="/js/admin-edit-info-text.js"></script>
+	</body>
+</html>

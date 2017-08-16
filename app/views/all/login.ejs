@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="<%= trans('langCode') %>">
+	<head>
+		<meta charset="utf-8">
+		<title><%= trans('adminLogin') %></title>
+		<link rel="stylesheet" type="text/css" href="/css/global.css">
+		<link rel="stylesheet" type="text/css" href="/css/login.css">
+	</head>
+	<body>
+		<h1><%= trans("adminLoginHeader") %></h1>
+
+		<div id="main">
+			<% if (typeof msg !== "undefined") { %>
+				<h2><%= msg %></h2>
+			<% } %>
+
+			<form id="login-form" method="POST" action="/api/admin-login">
+				<input type="text" name="username">
+				<input type="password" name="password">
+				<input type="submit" value="<%= trans('logIn') %>">
+			</form>
+		</div>
+	</body>
+</html>

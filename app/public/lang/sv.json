@@ -1,0 +1,12 @@
+{
+        "sessionUpdateError": "Kunde inte uppdatera sessionen, kan vara ett nätverksfel. Kontrollera konsolen för felmeddelande.",
+        "booked": "Bokad",
+        "empty": "Ledig",
+        "onHold": "Anhållen",
+        "reserved": "Reserverad",
+        "enterPass": "Ange lösenord:",
+        "enterName": "Ange namn:",
+        "couldNotLoadTheData": "Kunde inte ladda datan",
+        "enterNewPassword": "Ange nytt lösenord:",
+        "successBooked": "Platsen är bokad!"
+}

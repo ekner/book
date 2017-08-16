@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="<%= trans('langCode') %>">
+	<head>
+		<meta charset="utf-8">
+		<title><%= trans('book') %></title>
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+		<link rel="stylesheet" type="text/css" href="/css/global.css">
+		<link rel="stylesheet" type="text/css" href="/css/book.css">
+		<link rel="stylesheet" type="text/css" href="/css/seats.css">
+	</head>
+	<body>
+		<div id="back" onclick="window.location = '/'"><p><</p></div>
+
+		<div id="msg-box"><p></p></div>
+		<div id="seats-container"></div>
+
+		<div id="book">
+			<h2 id="close">X</h2>
+			<form id="book-form" autocomplete="new-password">
+				<h2><%= trans("bookBoxHeader") %> <span id="book-num"></span></h2>
+
+				<label for="name"><%= trans("name") %></label>
+				<input placeholder="<%= trans('forename') %> + <%= trans('surname') %>" id="name" type="text" name="name" autocomplete="off">
+				<br style="clear: both;">
+
+				<label for="password"><%= trans("password") %></label>
+				<input id="password" autocomplete="new-password" type="password" name="password">
+				<br style="clear: both;">
+
+				<input id="book-id" name="id" type="hidden">
+				<button id="submit"><%= trans("book") %></button>
+			</form>
+		</div>
+
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f" crossorigin="anonymous"></script>
+		<script src="/js/global.js"></script>
+		<script src="/js/seats.js"></script>
+		<script src="/js/book.js"></script>
+	</body>
+</html>

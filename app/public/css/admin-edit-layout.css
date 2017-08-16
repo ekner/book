@@ -1,0 +1,27 @@
+body, html {
+	overflow: hidden;
+}
+
+#top-bar .edit-layout {
+	text-decoration: underline;
+	text-decoration-color: lightgray;
+}
+
+#toolbar {
+	height: 40px;
+	margin-left: 10px;
+}
+
+#toolbar button {
+	margin-top: 7px;
+	height: 25px;
+	font-size: 100%;
+	margin-left: 5px;
+}
+
+#canvas {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	/* Height is calulcated with js */
+}

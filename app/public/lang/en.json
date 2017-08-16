@@ -1,0 +1,12 @@
+{
+        "sessionUpdateError": "Could not update session, could be a network error. Check the client console for error message.",
+        "booked": "Booked",
+        "empty": "Free",
+        "onHold": "On Hold",
+        "reserved": "Reserved",
+        "enterPass": "Enter password:",
+        "enterName": "Enter name:",
+        "couldNotLoadTheData": "Could not load the data",
+        "enterNewPassword": "Enter new password:",
+        "successBooked": "The seat was successfully booked!"
+}
