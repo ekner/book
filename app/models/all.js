@@ -8,22 +8,6 @@ module.exports.bookSessions = function(_bookSessions)
 	bookSessions = _bookSessions;
 };
 
-/*
-module.exports.getInfoTextAndHeader = function(callback)
-{
-	glob.db.all("SELECT * FROM data WHERE key = 'info-text' OR key = 'header-text'", function(err, data) {
-		if (err) {
-			throw(err);
-			callback("500");
-		} else {
-			const info = {};
-			info[data[0].key] = data[0].value;
-			info[data[1].key] = data[1].value;
-			callback(info);
-		}
-	});
-};*/
-
 module.exports.getInfoTextAndHeader = function(trans, callback)
 {
 	glob.db.get("SELECT * FROM texts WHERE langCode = ?", trans("langCode"), function(err, data) {
@@ -152,7 +136,7 @@ module.exports.unholdSeat = function(params, callback)
 module.exports.book = function(params, callback)
 {
 	if (isNaN(params.id)) {
-		callback("400");
+		callback("400Invalid parameters");
 	} else {
 		glob.checkIfIdExistsInLayout(params.id, function() {
 			params.name = params.name.trim();

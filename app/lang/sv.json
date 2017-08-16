@@ -8,7 +8,6 @@
         "surname": "Efternamn",
         "adminLoginHeader": "Admin-inloggning",
         "tookOnHold": "Tyvärr verkar det som att någon annan just klickade platsen",
-        "noExistInLayout": "Platsen finns inte i layouten",
         "infoTextInvalid": "Info-texten innehåller otillåtna tecken",
         "headerTextInvalid": "Rubrik-texten innehåller otillåtna tecken",
         "newAdminPassword": "Admin-lösenord uppdaterat",

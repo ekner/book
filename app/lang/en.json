@@ -8,7 +8,6 @@
         "surname": "Surname",
         "adminLoginHeader": "Admin login",
         "tookOnHold": "Unfortunately it seems someone else just took the seat on hold",
-        "noExistInLayout": "The seat does not exist in the layout",
         "infoTextInvalid": "The info text contains invalid characters",
         "headerTextInvalid": "The header text contains invalid characters",
         "newAdminPassword": "Admin password updated",

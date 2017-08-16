@@ -18,7 +18,7 @@ module.exports.randomString = function(len)
 module.exports.checkIfIdExistsInLayout = function(id, callbackYes, callbackElse)
 {
 	if (id === 0) {
-		callbackElse(trans("noExistInLayout"));
+		callbackElse("The seat does not exist in the layout");
 	} else {
 		db.get("SELECT * FROM data WHERE key = 'layout'", function(err, data) {
 			if (err) {
@@ -40,7 +40,7 @@ module.exports.checkIfIdExistsInLayout = function(id, callbackYes, callbackElse)
 				if (found)
 					callbackYes();
 				else
-					callbackElse(trans("noExistInLayout"));
+					callbackElse("The seat does not exist in the layout");
 			}
 		});
 	}

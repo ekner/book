@@ -53,25 +53,6 @@ module.exports.getStatistics = function(callback)
 	}
 };
 
-module.exports.setText = function(params, callback)
-{
-	if (infoTextContainsInvalidChars(params.infoText)) {
-		callback("400" + params.trans("infoTextInvalid"));
-	} else {
-		glob.db.run("UPDATE texts SET text = ?, header = ? WHERE langCode = ?", [params.infoText, params.infoHeader, params.langCode], function(err) {
-			if (err) {
-				throw(err);
-				callback("500");
-			} else {
-				if (this.changes === 0)
-					callback("400The language does not exist");
-				else
-					callback("success");
-			}
-		});
-	}
-};
-
 module.exports.getTextAndLang = function(langCode, trans, callback)
 {
 	var i = 0;
@@ -107,9 +88,30 @@ module.exports.getTextAndLang = function(langCode, trans, callback)
 	}
 };
 
+module.exports.setText = function(params, callback)
+{
+	if (infoTextContainsInvalidChars(params.infoText)) {
+		callback("400" + params.trans("infoTextInvalid"));
+	} else if (params.infoHeader.indexOf("<") !== -1) {
+		callback("400" + params.trans("headerTextInvalid"));
+	} else {
+		glob.db.run("UPDATE texts SET text = ?, header = ? WHERE langCode = ?", [params.infoText, params.infoHeader, params.langCode], function(err) {
+			if (err) {
+				throw(err);
+				callback("500");
+			} else {
+				if (this.changes === 0)
+					callback("400The language does not exist");
+				else
+					callback("success");
+			}
+		});
+	}
+};
+
 module.exports.addTextLang = function(params, callback)
 {
-	if (headerTextContainsInvalidChars(params.langCode)) {
+	if (!langCodeValid(params.langCode)) {
 		callback("400" + params.trans("langCodeInvalid"));
 	} else {
 		glob.db.get("SELECT * FROM texts WHERE langCode = ?", params.langCode, function(err, data) {
@@ -153,54 +155,6 @@ module.exports.removeTextLang = function(params, callback)
 		}
 	});
 };
-
-/*
-module.exports.getInfoTextAndHeader = function(callback)
-{
-	glob.db.all("SELECT * FROM data WHERE key = 'info-text' OR key = 'header-text'", function(err, data) {
-		if (err) {
-			throw(err);
-			callback("500");
-		} else {
-			const info = {};
-			info[data[0].key] = data[0].value;
-			info[data[1].key] = data[1].value;
-			callback(info);
-		}
-	});
-};
-
-module.exports.setInfoText = function(params, callback)
-{
-	if (infoTextContainsInvalidChars(params.infoText)) {
-		callback("400" + params.trans("infoTextInvalid"));
-	} else {
-		glob.db.run("UPDATE data SET value = ? WHERE key = 'info-text'", params.infoText, function(err) {
-			if (err) {
-				throw(err);
-				callback("500");
-			} else {
-				callback("success");
-			}
-		});
-	}
-};
-
-module.exports.setHeaderText = function(params, callback)
-{
-	if (params.headerText.indexOf("<") !== -1) {
-		callback("400" + params.trans("headerTextInvalid"));
-	} else {
-		glob.db.run("UPDATE data SET value = ? WHERE key = 'header-text'", params.headerText, function(err) {
-			if (err) {
-				throw(err);
-				callback("500");
-			} else {
-				callback("success");
-			}
-		});
-	}
-};*/
 
 module.exports.changeCurrentPassword = function(params, username, callback)
 {
@@ -267,35 +221,39 @@ module.exports.setLayout = function(data, callback)
 
 module.exports.toggleOnHold = function(params, callback)
 {
-	glob.db.get("SELECT * FROM seats WHERE id = ?", params.id, function(err, data) {
-		if (err) {
-			throw(err);
-			callback("500");
-		} else {
-			if (typeof data === "undefined") {
-				glob.db.run("INSERT INTO seats (id, status, holdTo) VALUES (?, 'onHold', ?)", [params.id, params.sessionId], function(err) {
-					if (err) {
-						throw(err);
-						callback("500");
-					} else {
-						bookSessions.notify("seats");
-						callback("onHold");
-					}
-				});
-			} else if (data.status === "onHold") {
-				glob.db.run("DELETE FROM seats WHERE id = ?", params.id, function(err) {
-					if (err) {
-						throw(err);
-						callback("500");
-					} else {
-						bookSessions.notify("seats");
-						callback("empty");
-					}
-				});
+	glob.checkIfIdExistsInLayout(params.id, function() {
+		glob.db.get("SELECT * FROM seats WHERE id = ?", params.id, function(err, data) {
+			if (err) {
+				throw(err);
+				callback("500");
 			} else {
-				callback(params.trans("nothingChanged"));
+				if (typeof data === "undefined") {
+					glob.db.run("INSERT INTO seats (id, status, holdTo) VALUES (?, 'onHold', ?)", [params.id, params.sessionId], function(err) {
+						if (err) {
+							throw(err);
+							callback("500");
+						} else {
+							bookSessions.notify("seats");
+							callback("onHold");
+						}
+					});
+				} else if (data.status === "onHold") {
+					glob.db.run("DELETE FROM seats WHERE id = ?", params.id, function(err) {
+						if (err) {
+							throw(err);
+							callback("500");
+						} else {
+							bookSessions.notify("seats");
+							callback("empty");
+						}
+					});
+				} else {
+					callback(params.trans("nothingChanged"));
+				}
 			}
-		}
+		});
+	}, function(msg) {
+		callback(msg);
 	});
 };
 
@@ -527,8 +485,8 @@ function infoTextContainsInvalidChars(t)
 	return false;
 }
 
-function headerTextContainsInvalidChars(t)
+function langCodeValid(t)
 {
 	// either like "sv" or "sv-fi"
-	return !(t.match(/[a-z]{2}/) || t.match(/[a-z]{2}-[a-z]{2}/))
+	return t.match(/^[a-z]{2}$/) !== null || t.match(/^[a-z]{2}-[a-z]{2}$/) !== null;
 }

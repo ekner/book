@@ -34,7 +34,6 @@ router.get("/admin/edit-seats", function(req, res)
 	res.render("admin/edit-seats.ejs", {trans: req.trans});
 });
 
-
 router.get("/admin/edit-info-text", function(req, res)
 {
 	const langCode = typeof req.query.langCode !== "undefined" ? req.query.langCode : "default";
@@ -65,7 +64,6 @@ router.post("/api/admin/add-text-lang", function(req, res)
 {
 	glob.params(req, res, ["langCode"], function(params) {
 		model.addTextLang(params, function(data) {
-			console.log(data);
 			glob.send(res, data);
 		});
 	});
@@ -79,28 +77,6 @@ router.post("/api/admin/remove-text-lang", function(req, res)
 		});
 	});
 });
-
-/*
-
-router.post("/api/admin/set-info-text", function(req, res)
-{
-	glob.params(req, res, ["infoText"], function(params) {
-		model.setInfoText(params, function(data) {
-			glob.send(res, data);
-		});
-	});
-});
-
-router.post("/api/admin/set-header-text", function(req, res)
-{
-	glob.params(req, res, ["headerText"], function(params) {
-		model.setHeaderText(params, function(data) {
-			glob.send(res, data);
-		});
-	});
-});
-
-*/
 
 router.post("/api/admin/change-current-password", function(req, res)
 {
@@ -177,18 +153,18 @@ router.post("/api/admin/get-seat-details", function(req, res)
 
 function checkAuthPages(req, res, next)
 {
-	//if (req.session.login !== undefined && req.session.login === "admin")
+	if (req.session.login !== undefined && req.session.login === "admin")
 		next();
-	//else
-		//res.redirect("/admin-login");
+	else
+		res.redirect("/admin-login");
 }
 
 function checkAuthAPI(req, res, next)
 {
-	//if (req.session.login !== undefined && req.session.login === "admin")
+	if (req.session.login !== undefined && req.session.login === "admin")
 		next();
-	//else
-		//res.status(403).send("You are not logged in.");
+	else
+		res.status(403).send("You are not logged in.");
 }
 
 module.exports.router = router;
