@@ -39,8 +39,6 @@ module.exports.bookPassEnabled = function(callback)
 			throw(err);
 			callback("500");
 		} else {
-			console.log(data.value);
-
 			callback(data.value !== "");
 		}
 	});
