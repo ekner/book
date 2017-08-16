@@ -23,7 +23,12 @@ router.get("/", function(req, res)
 
 router.get("/book", function(req, res)
 {
-	res.render("all/book.ejs", {trans: req.trans});
+	model.bookPassEnabled(function(data) {
+		if (data === "500")
+			glob.send(res, data);
+		else
+			res.render("all/book.ejs", {trans: req.trans, bookPassEnabled: data});
+	});
 });
 
 router.get("/admin-login", function(req, res)

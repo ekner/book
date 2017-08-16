@@ -32,6 +32,20 @@ module.exports.getInfoTextAndHeader = function(trans, callback)
 	});
 };
 
+module.exports.bookPassEnabled = function(callback)
+{
+	glob.db.get("SELECT * FROM data WHERE key = 'bookPassword'", function(err, data) {
+		if (err) {
+			throw(err);
+			callback("500");
+		} else {
+			console.log(data.value);
+
+			callback(data.value !== "");
+		}
+	});
+};
+
 module.exports.adminLogin = function(params, callback)
 {
 	glob.db.get("SELECT * FROM adminAccounts WHERE username = ?", params.username, function(err, data) {
@@ -160,10 +174,10 @@ function checkBookAvailability(params, callback)
 			callback("500");
 		} else {
 			if (typeof data === "undefined") {
-				bookWithAdminPass(params, callback);
+				bookWithBookPass(params, callback);
 			} else if (data.status === "onHold") {
 				if (data.holdTo === params.sessionId) {
-					bookWithAdminPass(params, callback);
+					bookWithBookPass(params, callback);
 				} else {
 					callback(params.trans("seatOnHold"));
 				}
@@ -176,7 +190,7 @@ function checkBookAvailability(params, callback)
 	});
 }
 
-function bookWithAdminPass(params, callback)
+function bookWithBookPass(params, callback)
 {
 	glob.db.get("SELECT * FROM data WHERE key = 'bookPassword'", function(err, data) {
 		if (err) {
@@ -207,17 +221,21 @@ function bookWithReservedPass(params, callback)
 
 function compareBookPasswords(params, callback, password)
 {
-	bcrypt.compare(params.password, password, function(err, valid) {
-		if (err) {
-			throw(err);
-			callback("500");
-		} else {
-			if (valid)
-				book(params, callback);
-			else
-				callback(params.trans("wrongPassword"));
-		}
-	});
+	if (password === "") {
+		book(params, callback);
+	} else {
+		bcrypt.compare(params.password, password, function(err, valid) {
+			if (err) {
+				throw(err);
+				callback("500");
+			} else {
+				if (valid)
+					book(params, callback);
+				else
+					callback(params.trans("wrongPassword"));
+			}
+		});
+	}
 }
 
 function book(params, callback)

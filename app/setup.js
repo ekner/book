@@ -65,7 +65,10 @@ function fixAccounts()
 		 	adminPass = readlineSync.question("Enter password for admin: ");
 		var bookingPass = readlineSync.question("Enter booking password (leave blank if password shouldn't be required): ");
 		var adminPassHash = bcrypt.hashSync(adminPass, 10);
-		var bookingPassHash = bcrypt.hashSync(bookingPass, 10);
+		if (bookingPass !== "")
+			var bookingPassHash = bcrypt.hashSync(bookingPass, 10);
+		else
+			var bookingPassHash = "";
 
 		glob.db.serialize(function() {
 			glob.db.run("DELETE FROM data WHERE key = 'bookPassword'");

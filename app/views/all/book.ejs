@@ -23,9 +23,13 @@
 				<input placeholder="<%= trans('forename') %> + <%= trans('surname') %>" id="name" type="text" name="name" autocomplete="off">
 				<br style="clear: both;">
 
-				<label for="password"><%= trans("password") %></label>
-				<input id="password" autocomplete="new-password" type="password" name="password">
-				<br style="clear: both;">
+				<% if (bookPassEnabled) { %>
+					<label for="password"><%= trans("password") %></label>
+					<input id="password" autocomplete="new-password" type="password" name="password">
+					<br style="clear: both;">
+				<% } else { %>
+					<input id="password" type="hidden" name="password" value="">
+				<% } %>
 
 				<input id="book-id" name="id" type="hidden">
 				<button id="submit"><%= trans("book") %></button>
