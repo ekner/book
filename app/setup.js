@@ -1,4 +1,8 @@
 const fs = require("fs");
+
+if (!fs.existsSync("./db"))
+	fs.mkdirSync("./db");
+
 const readlineSync = require("readline-sync");
 const bcrypt = require("bcrypt");
 const glob = require("./global.js");
