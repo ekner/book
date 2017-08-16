@@ -27,6 +27,10 @@ html, body {
         cursor: pointer !important;
 }
 
+#seats td.my-on-hold div {
+	animation: none;
+}
+
 #msg-box {
 	margin-top: 5px;
 	text-align: center;
