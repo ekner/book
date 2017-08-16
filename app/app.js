@@ -13,6 +13,7 @@ const allController = require("./controllers/all.js");
 const adminController = require("./controllers/admin.js")
 
 const app = express();
+app.disable("x-powered-by");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.text());
