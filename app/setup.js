@@ -13,7 +13,7 @@ const defaultHeader = "This Is a Header";
 function setupDB(callback)
 {
 	var answer = readlineSync.question("Note! If you have run \"book\" before, all previous data will be deleted. Continue? (y/N) ");
-	if (answer !== "y" && answer !== "yes") {
+	if (answer !== "y" && answer !== "Y" && answer !== "yes") {
 		console.log("Aborted.");
 		process.exit(0);
 	}
