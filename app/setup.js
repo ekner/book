@@ -100,7 +100,7 @@ function run()
 		return;
 	}
 	if (process.argv[2] === "help") {
-		console.log("Available options:\n  all\n  db\n  accounts\n  port\n");
+		console.log("Available options:\n  all\n  accounts\n  port\n");
 		return;
 	}
 
@@ -109,7 +109,6 @@ function run()
 			setupDB();
 			fixAccounts();
 			fixPort();
-
 			break;
 		case "accounts":
 			fixAccounts();
