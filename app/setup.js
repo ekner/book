@@ -96,7 +96,7 @@ function ifTableExists(name, callback)
 function run()
 {
 	if (typeof process.argv[2] === "undefined") {
-		console.log("Run 'node setup.js all' to set up everything.");
+		console.log("Run 'node setup.js all' to set up everything. Run 'node setup.js help' to see available flags.");
 		return;
 	}
 	if (process.argv[2] === "help") {
