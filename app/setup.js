@@ -6,9 +6,11 @@ if (!fs.existsSync("./db"))
 const readlineSync = require("readline-sync");
 const bcrypt = require("bcrypt");
 const glob = require("./global.js");
+const sqlite3 = require("sqlite3").verbose();
 
 const defaultText = "Welcome to book! This is a sample text. Go to /admin to edit it and to do other admin tasks. <h2>Basic html-support</h2>";
 const defaultHeader = "This Is a Header";
+const seatsTableCreateQuery = "CREATE TABLE seats (id INTEGER, status TEXT, name TEXT, email TEXT, password TEXT, holdTo TEXT)";
 
 function setupDB(callback)
 {
@@ -26,7 +28,7 @@ function setupDB(callback)
 
 		glob.db.run("CREATE TABLE data (key TEXT, value TEXT)");
 		glob.db.run("CREATE TABLE adminAccounts (username TEXT, password TEXT)");
-		glob.db.run("CREATE TABLE seats (id INTEGER, status TEXT, name TEXT, email TEXT, password TEXT, holdTo TEXT)");
+		glob.db.run(seatsTableCreateQuery);
 		glob.db.run("CREATE TABLE texts (langCode TEXT, text TEXT, header TEXT)");
 
 		glob.db.run("INSERT INTO data VALUES ('layout', ?)", "[]"); // Empty JSON-array
@@ -81,6 +83,94 @@ function fixAccounts()
 	});
 }
 
+function doExport()
+{
+	if (!fs.existsSync("./backup"))
+		fs.mkdirSync("./backup");
+
+	var name = "";
+	while (name === "" || name.indexOf(".") !== -1 || name.indexOf("/") !== -1 || name.indexOf("\\") !== -1)
+		name = readlineSync.question("Enter name for backup (without file extensions or directories): ");
+	const targetFile = "./backup/" + name + ".bookDB.sqlite3";
+	const sourceFile = "./db/db.sqlite3";
+
+	if (fs.existsSync(targetFile)) {
+		console.log("File already exists (" + targetFile + ")");
+		doExport();
+	} else {
+		var success = true;
+		try {
+			fs.writeFileSync(targetFile, fs.readFileSync(sourceFile));
+		} catch (err) {
+			success = false;
+			throw(err);
+		}
+		if (success)
+			console.log("Data exported");
+	}
+}
+
+function doImport()
+{
+	var answer = readlineSync.question("Note! Existing layout and seat data will be overwritten. If you want to save it, you should use the export feature first. Continue? (y/N) ");
+	if (answer !== "y" && answer !== "Y" && answer !== "yes") {
+		console.log("Aborted.");
+		process.exit(0);
+	}
+	if (!fs.existsSync("./backup")) {
+		console.log("There is no directory called backup");
+		process.exit(0);
+	}
+
+	var name = "";
+	while (name === "" || name.indexOf(".") !== -1 || name.indexOf("/") !== -1 || name.indexOf("\\") !== -1)
+		name = readlineSync.question("Enter the name of backup you wish to import (without file extensions or directories): ");
+	const file = "./backup/" + name + ".bookDB.sqlite3";
+
+	if (!fs.existsSync(file)) {
+		console.log("No such file (" + file + ")");
+		doImport();
+	} else {
+		// Delete layout and data from the db:
+		glob.db.run("DELETE FROM seats");
+		glob.db.run("DELETE FROM data WHERE key = 'layout'");
+
+		const backup = new sqlite3.Database(file);
+
+		// Copy all seat data from backup:
+		backup.each("SELECT * FROM seats", function(err, data) {
+			if (err) {
+				throw(err);
+				process.exit(1);
+			} else {
+				glob.db.run("INSERT INTO seats VALUES (?, ?, ?, ?, ?, ?)", [data.id, data.status, data.name, data.email, data.password, data.holdTo]);
+			}
+		}, function (err) {
+			if (err) {
+				throw(err);
+				process.exit(1);
+			} else {
+				// When finished, read the layout from the backup and copy it as well
+				backup.get("SELECT * FROM data WHERE key = 'layout'", function(err, data) {
+					if (err) {
+						throw(err);
+						process.exit(1);
+					} else {
+						glob.db.run("INSERT INTO data VALUES ('layout', ?)", data.value, function(err) {
+							if (err) {
+								throw(err);
+								process.exit(1);
+							} else {
+								console.log("Data successfully imported");
+							}
+						});
+					}
+				});
+			}
+		});
+	}
+}
+
 function ifTableExists(name, callback)
 {
 	glob.db.get("SELECT name FROM sqlite_master WHERE type='table' AND name=?", name, function(err, data) {
@@ -91,19 +181,22 @@ function ifTableExists(name, callback)
 			if (typeof data !== "undefined")
 				callback();
 			else
-				console.log("You must first either run 'node setup.js all' or 'node setup.js db'");
+				console.log("You must first run 'node setup.js all'");
 		}
 	});
 }
 
 function run()
 {
+	if (!fs.existsSync("./setup.js"))
+		abort("setup.js is not being run from its own directory! Please first change directory to where the file is stored, and then run setup.js.")
+
 	if (typeof process.argv[2] === "undefined") {
 		console.log("Run 'node setup.js all' to set up everything. Run 'node setup.js help' to see available flags.");
 		return;
 	}
 	if (process.argv[2] === "help") {
-		console.log("Available options:\n  all\n  accounts\n  port\n");
+		console.log("Available options:\n  all\n  accounts\n  port\n  export\n  import\n");
 		return;
 	}
 
@@ -118,6 +211,12 @@ function run()
 			break;
 		case "port":
 			fixPort();
+			break;
+		case "export":
+			doExport();
+			break;
+		case "import":
+			doImport();
 			break;
 	}
 }

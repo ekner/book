@@ -59,3 +59,4 @@ typings/
 
 app/db
 app/sessions
+app/backup
