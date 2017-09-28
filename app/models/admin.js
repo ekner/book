@@ -473,7 +473,7 @@ function infoTextContainsInvalidChars(t)
 		var valid = false;
 		for (var j = 0; j < validTags.length; ++j) {
 			const tag = t.substr(i + 1, validTags[j].length + 1);
-			if (tag === validTags[j] + ">" || t.search(/<a href="[^<"]*">/) === i) {
+			if (tag === validTags[j] + ">" || t.substr(i).search(/<a href="[^<"]*">/) === 0) {
 				valid = true;
 				break;
 			}
