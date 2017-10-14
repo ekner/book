@@ -317,6 +317,30 @@ module.exports.reserve = function(params, callback)
 	});
 };
 
+module.exports.toggleArrivedStatus = function(params, callback)
+{
+	glob.db.get("SELECT * FROM seats WHERE id = ?", params.id, function(err, seatData) {
+		if (err) {
+			throw(err);
+			callback("500");
+		} else if (typeof seatData === "undefined") {
+			callback("404Couldn't find seat");
+		} else {
+			const isHere = seatData.isHere ? 0 : 1;
+
+			glob.db.run("UPDATE seats SET isHere = ? WHERE id = ?", [isHere, params.id], function(err) {
+				if (err) {
+					throw(err);
+					callback("500");
+				} else {
+					bookSessions.notify("seats");
+					callback("success");
+				}
+			});
+		}
+	});
+};
+
 module.exports.getSeatDetails = function(params, callback)
 {
 	glob.db.get("SELECT * FROM seats WHERE id = ?", params.id, function(err, seatData) {

@@ -50,5 +50,6 @@
 		"saveChanges": "Spara ändringarna",
 		"removeLang": "Ta bort översättning",
 		"addTrans": "Lägg till översättning",
-		"editTrans": "Ändra översättning"
+		"editTrans": "Ändra översättning",
+		"hasArrived": "Har anlänt"
 }

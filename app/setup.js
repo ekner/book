@@ -10,7 +10,7 @@ const sqlite3 = require("sqlite3").verbose();
 
 const defaultText = "Welcome to book! This is a sample text. Go to /admin to edit it and to do other admin tasks. <h2>Basic html-support</h2>";
 const defaultHeader = "This Is a Header";
-const seatsTableCreateQuery = "CREATE TABLE seats (id INTEGER, status TEXT, name TEXT, email TEXT, password TEXT, holdTo TEXT)";
+const seatsTableCreateQuery = "CREATE TABLE seats (id INTEGER, status TEXT, name TEXT, email TEXT, password TEXT, holdTo TEXT, isHere INTEGER DEFAULT 0)";
 
 function setupDB(callback)
 {

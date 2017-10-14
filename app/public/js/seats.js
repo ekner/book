@@ -130,10 +130,12 @@ function getSeatsInfo()
 function insertSeatsData(data)
 {
 	$("#seats td:not([data-status='spacer'])").attr("data-status", "empty");
+	$("#seats td").attr("data-is-here", "0");
 
 	for (var i = 0; i < data.length; ++i) {
 		var elem = $("#id-" + data[i].id);
 		elem.attr("data-status", data[i].status);
+		elem.attr("data-is-here", data[i].isHere);
 	}
 
 	seatsInfo = [];

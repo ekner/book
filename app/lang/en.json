@@ -50,5 +50,6 @@
 		"saveChanges": "Save changes",
 		"removeLang": "Remove translation",
 		"addTrans": "Add translation",
-		"editTrans": "Edit translation"
+		"editTrans": "Edit translation",
+		"hasArrived": "Has arrived"
 }

@@ -72,7 +72,7 @@ module.exports.getLayout = function(callback)
 
 module.exports.getSeats = function(callback)
 {
-	glob.db.all("SELECT * FROM seats", function(err, data) {
+	glob.db.all("SELECT id, status, name, holdTo, isHere FROM seats", function(err, data) {
 		if (err) {
 			throw(err);
 			callback("500");

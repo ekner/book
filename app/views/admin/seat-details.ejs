@@ -10,6 +10,8 @@
                 <input type="button" value="<%= trans('changeName') %>" onclick="book(<%= seatData.id %>)">
                 <input type="button" value="<%= trans('unbookAndReserve') %>" onclick="reserve(<%= seatData.id %>)">
                 <input type="button" value="<%= trans('unbook') %>" onclick="clearSeat(<%= seatData.id %>)">
+				<p class="has-arrived-text"><%= trans('hasArrived') %>:</p>
+				<input type="checkbox" onclick="updateArrivedStatus(<%= seatData.id %>)" id="has-arrived" <%= seatData.isHere ? "checked" : "" %>>
         <% } else if (seatData.status === "reserved") { %>
                 <input type="button" value="<%= trans('changePassword') %>" onclick="reserve(<%= seatData.id %>)">
                 <input type="button" value="<%= trans('unreserveAndBook') %>" onclick="book(<%= seatData.id %>)">

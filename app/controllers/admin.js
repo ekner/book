@@ -139,6 +139,15 @@ router.post("/api/admin/reserve", function(req, res)
 	});
 });
 
+router.post("/api/admin/toggle-arrived-status", function(req, res)
+{
+	glob.params(req, res, ["id"], function(params) {
+		model.toggleArrivedStatus(params, function(result) {
+			glob.send(res, result);
+		});
+	});
+});
+
 router.post("/api/admin/get-seat-details", function(req, res)
 {
 	glob.params(req, res, ["id"], function(params) {

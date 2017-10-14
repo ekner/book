@@ -59,6 +59,13 @@ function clearSeat(seatId)
 	});
 }
 
+function updateArrivedStatus(seatId)
+{
+	action("toggle-arrived-status", {id: seatId}, function() {
+		updateSeatDetails();
+	});
+}
+
 function action(action, data, callback)
 {
 	$.ajax({

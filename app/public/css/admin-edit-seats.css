@@ -8,19 +8,19 @@ html, body {
 }
 
 #seat-details-container {
-        position: absolute;
-        width: 250px;
-        top: 80px;
-        bottom: 30px;
-        right: 30px;
+	position: absolute;
+	width: 250px;
+	top: 80px;
+	bottom: 30px;
+	right: 30px;
 }
 
 #seats-container {
-        position: absolute;
-        width: calc(100% - 340px);
-        left: 30px;
-        top: 80px;
-        bottom: 30px;
+	position: absolute;
+	width: calc(100% - 340px);
+	left: 30px;
+	top: 80px;
+	bottom: 30px;
 }
 
 #seats td:not([data-status="spacer"]) div {
@@ -65,4 +65,9 @@ html, body {
 	margin-bottom: 22px;
 	margin-top: 0;
 	text-align: center;
+}
+
+p.has-arrived-text {
+	margin-bottom: 7px;
+	margin-top: 14px;
 }
