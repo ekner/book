@@ -143,7 +143,8 @@ function doImport()
 				throw(err);
 				process.exit(1);
 			} else {
-				glob.db.run("INSERT INTO seats VALUES (?, ?, ?, ?, ?, ?)", [data.id, data.status, data.name, data.email, data.password, data.holdTo]);
+				const isHere = typeof data.isHere === "undefined" ? 0 : data.isHere;
+				glob.db.run("INSERT INTO seats VALUES (?, ?, ?, ?, ?, ?, ?)", [data.id, data.status, data.name, data.email, data.password, data.holdTo, isHere]);
 			}
 		}, function (err) {
 			if (err) {
