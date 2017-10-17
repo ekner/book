@@ -63,7 +63,7 @@
 }
 
 #seats td[data-is-here="1"] div {
-	background: blue;
+	background: #1c67d8;
 }
 
 #seats td.my-on-hold div {
