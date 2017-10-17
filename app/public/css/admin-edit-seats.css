@@ -35,13 +35,13 @@ html, body {
 	margin-top: 20px;
 	text-align: center;
 	display: none;
-	background: red;
+	background: rgb(54, 54, 54);
+	color: white;
 }
 
 #msg-box p {
 	margin-top: 0;
-	border-top: 2px dashed orange;
-	border-bottom: 2px dashed orange;
+	border: 3px dashed orange;
 	padding: 5px;
 }
 
