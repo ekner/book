@@ -1,3 +1,5 @@
+const hoverBoxMargin = 12;
+
 // seats data will be inserted here:
 var seatsInfo = [];
 var interval = setInterval(updateBookSession, 5000);
@@ -13,8 +15,7 @@ getTable(function() {
 
 $("body").append('<div id="hover"><h2 id="hover-status"></h2><h3 id="hover-extra"></h3></div>');
 
-window.addEventListener("beforeunload", function()
-{
+window.addEventListener("beforeunload", function() {
 	clearInterval(interval);
 	$.ajax({type: "POST", url: "/api/unhold-seat"});
 });
@@ -184,10 +185,23 @@ function reloadEvents()
 	});
 
 	$("#seats td:not([data-status='spacer']) > div").mousemove(function(e) {
-		const margin = 12;
+		//If the mouse goes outside the screen edge we will re-position the box to the left
+		const width = $("#hover").outerWidth();
+		const outerX = e.clientX + hoverBoxMargin + width;
+		if (outerX > window.innerWidth) {
+			$("#hover").css("left", e.clientX - hoverBoxMargin - width);
+		} else {
+			$("#hover").css("left", e.clientX + hoverBoxMargin);
+		}
 
-		$("#hover").css("top", e.clientY + margin);
-		$("#hover").css("left", e.clientX + margin);
+		//If the mouse goes outside the screen edge we will re-position the box to the right
+		const height = $("#hover").outerHeight();
+		const outerY = e.clientY + hoverBoxMargin + height;
+		if (outerY > window.innerHeight) {
+			$("#hover").css("top", e.clientY - hoverBoxMargin - height);
+		} else {
+			$("#hover").css("top", e.clientY + hoverBoxMargin);
+		}
 	});
 
 	$("#seats td:not([data-status='spacer']) > div").mouseleave(function(e) {
