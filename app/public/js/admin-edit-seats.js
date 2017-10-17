@@ -25,10 +25,10 @@ document.addEventListener("keyup", function(e) {
 
 function unholdCurrentDetailsSeat()
 {
-	const id = Number($("#seat-details-container h1").html());
+	const id = Number($("#paste-seat-details h1").html());
 	if (!isNaN(id)) {
 		toggleOnHold(id);
-		$("#seat-details-container").empty();
+		$("#paste-seat-details").empty();
 	}
 }
 
@@ -55,7 +55,7 @@ function reserve(seatId)
 function clearSeat(seatId)
 {
 	action("clear", {id: seatId}, function() {
-		$("#seat-details-container").empty();
+		$("#paste-seat-details").empty();
 	});
 }
 
@@ -87,7 +87,7 @@ function action(action, data, callback)
 
 function updateSeatDetails()
 {
-	const id = Number($("#seat-details-container h1").html());
+	const id = Number($("#paste-seat-details h1").html());
 	if (!isNaN(id)) {
 		displaySeatDetails(id);
 	}
@@ -100,7 +100,7 @@ function displaySeatDetails(id)
 		data: {id: id},
 		url: "/api/admin/get-seat-details",
 		success: function(data) {
-			$("#seat-details-container").empty().append(data);
+			$("#paste-seat-details").empty().append(data);
 		},
 		error: function(xhr, status, error) {
 			displayMsg(xhr.responseText);
@@ -120,11 +120,15 @@ function toggleOnHold(seatId)
 			if (data === "onHold") {
 				displaySeatDetails(seatId);
 			} else if (data !== "empty") {
-                                displayMsg(data);
-                        }
+                displayMsg(data);
+            }
 		},
 		error: function(xhr, status, error) {
 			displayMsg(xhr.responseText);
 		}
 	});
 }
+
+// On this page we want to have the msg-box on a custom location, remove the default:
+$("#msg-box").remove();
+$("#seat-details-container").append('<div id="msg-box"><p></p></div>')

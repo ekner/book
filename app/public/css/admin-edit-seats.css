@@ -32,7 +32,7 @@ html, body {
 }
 
 #msg-box {
-	margin-top: 5px;
+	margin-top: 20px;
 	text-align: center;
 	display: none;
 	background: red;
