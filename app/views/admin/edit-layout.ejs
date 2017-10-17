@@ -9,7 +9,8 @@
 	</head>
 	<body onload="start()">
 		<%- include("top-bar") %>
-		
+		<div id="msg-box"><p></p></div>
+
 		<div id="toolbar">
 			<button onclick="actions.save()"><%= trans('save') %></button>
 			<button onclick="actions.cancel()"><%= trans('cancel') %></button>

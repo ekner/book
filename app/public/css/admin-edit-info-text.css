@@ -6,6 +6,10 @@ body {
 	overflow: hidden;
 }
 
+input, select, textarea {
+	font-size: 14px;
+}
+
 #top-bar .edit-info-text {
 	text-decoration: underline;
 	text-decoration-color: lightgray;
@@ -61,4 +65,17 @@ body {
 #toolbar .btn, #toolbar select {
 	width: 100%;
 	margin-bottom: 6px;
+}
+
+#msg-box {
+	display: none;
+	border: 3px dashed orange;
+	background: #363636;
+	color: white;
+	padding: 10px;
+	margin-bottom: 15px;
+}
+
+#msg-box p {
+	margin: 0;
 }

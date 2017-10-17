@@ -128,7 +128,3 @@ function toggleOnHold(seatId)
 		}
 	});
 }
-
-// On this page we want to have the msg-box on a custom location, remove the default:
-$("#msg-box").remove();
-$("#seat-details-container").append('<div id="msg-box"><p></p></div>')
